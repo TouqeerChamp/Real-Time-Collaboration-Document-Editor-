@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read/write access to documents if user is authenticated
+    match /documents/{documentId} {
+      allow read, write: if request.auth != null;
+
+      // Allow access to presence sub-collection if user is authenticated
+      match /presence/{presenceId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Keep the catch-all rule for other collections
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

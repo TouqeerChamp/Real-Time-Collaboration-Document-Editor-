@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "WebSearch",
+      "Bash(npm info:*)",
+      "Bash(npm view:*)",
+      "Bash(node:*)",
+      "Bash(npx vite:*)",
+      "Bash(npm update:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(pkill:*)",
+      "Bash(firebase:*)",
+      "Bash(cat:*)",
+      "Bash(powershell:*)",
+      "Bash(npx tsc:*)",
+      "Bash(ls:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}
