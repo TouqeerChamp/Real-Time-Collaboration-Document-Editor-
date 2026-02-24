@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# Real-Time Collaboration Document Editor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Google Docs Clone with real-time synchronization, user presence tracking, and role-based permissions.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Real-time Sync**: Multiple users can collaborate on a document simultaneously with instant updates
+- **User Presence**: See who's currently editing the document with T/M avatars showing active users
+- **Role-based Permissions**: Control document access and editing capabilities based on user roles
+- **Rich Text Editing**: Powered by Quill.js for a Google Docs-like editing experience
+- **Firebase Integration**: Real-time database for seamless collaboration and authentication
+- **Access Guard**: Secure document access with permission controls
 
-## React Compiler
+## Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React + TypeScript
+- Quill.js for rich text editing
+- Firebase Firestore for real-time synchronization
+- Firebase Authentication for user management
+- Vite for fast development
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Set up your Firebase project and add your config to `.env`
+4. Run the application with `npm run dev`
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Usage
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. Sign in to access documents
+2. Create or open existing documents
+3. Invite collaborators with specific permissions
+4. Collaborate in real-time with other users
+5. See other users' cursors and selections through the presence indicators
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Architecture
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+The application follows a modern React architecture with:
+- Context API for state management
+- Firebase for real-time synchronization
+- Quill.js for rich text editing capabilities
+- Component-based design for maintainability
