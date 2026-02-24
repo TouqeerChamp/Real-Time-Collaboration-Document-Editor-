@@ -36,7 +36,7 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ initialDocument }) => {
   const quillInitializedRef = useRef(false);
 
   // Determine user role and permissions
-  const [userRole, setUserRole] = useState<string>('owner'); // Default to owner
+  const [, setUserRole] = useState<string>('owner'); // Default to owner - role state is set but not directly used
   const [isReadOnly, setIsReadOnly] = useState(false);
 
   // Sharing functionality

@@ -16,7 +16,11 @@
       "Bash(powershell:*)",
       "Bash(npx tsc:*)",
       "Bash(ls:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(echo No files found containing react-quill:*)",
+      "Bash(find . -name \"*.ts\" -o -name \"*.tsx\" | xargs grep -i \"quill\" 2>/dev/null)",
+      "Bash(find ./src -name \"*.ts\" -o -name \"*.tsx\" | xargs grep -i \"quill\" 2>/dev/null)",
+      "Bash(git add:*)"
     ]
   }
 }

@@ -1,4 +1,4 @@
-import { doc, updateDoc, serverTimestamp, collection, query, onSnapshot, deleteField, deleteDoc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, collection, query, onSnapshot, deleteDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 // Interface for presence data
