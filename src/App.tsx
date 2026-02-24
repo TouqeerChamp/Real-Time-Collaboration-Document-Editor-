@@ -105,20 +105,22 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-[#F8FAFC] font-sans">
+      <div className="max-w-6xl mx-auto p-6">
         {errorMessage && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
             {errorMessage}
           </div>
         )}
-        <header className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Documents Dashboard</h1>
-          <div className="flex items-center gap-4">
-            <span className="text-gray-600">Welcome, {currentUser?.email}</span>
+
+        {/* Header */}
+        <header className="sticky top-0 z-10 h-14 flex items-center justify-between px-4 py-2 mb-6 backdrop-blur-md bg-white/70 border border-slate-200 rounded-lg">
+          <h1 className="text-xl font-bold tracking-tight text-slate-900">Documents</h1>
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-medium text-slate-500">Welcome, {currentUser?.email}</span>
             <button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
+              className="text-sm font-medium text-slate-500 hover:text-slate-700 transition-colors"
             >
               Logout
             </button>
@@ -126,10 +128,10 @@ function Dashboard() {
         </header>
 
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-700">Your Documents</h2>
+          <h2 className="text-lg font-medium tracking-tight text-slate-900">Your Documents</h2>
           <button
             onClick={handleCreateDocument}
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium tracking-tight hover:bg-indigo-700 transition-colors shadow-sm"
           >
             <Plus size={18} />
             New Document
@@ -138,54 +140,55 @@ function Dashboard() {
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
           </div>
         ) : documents.length === 0 ? (
-          <div className="bg-white p-12 rounded-lg shadow-md text-center">
-            <FileText className="mx-auto text-gray-400" size={64} />
-            <h3 className="text-xl font-medium text-gray-700 mt-4">No documents yet</h3>
-            <p className="text-gray-500 mt-2">Create your first document to get started</p>
+          <div className="bg-white border border-slate-100 rounded-lg p-12 text-center shadow-sm">
+            <FileText className="mx-auto text-slate-400" size={64} />
+            <h3 className="text-lg font-medium text-slate-900 mt-4">No documents yet</h3>
+            <p className="text-slate-500 mt-2">Create your first document to get started</p>
             <button
               onClick={handleCreateDocument}
-              className="mt-4 flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mx-auto"
+              className="mt-4 flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium tracking-tight hover:bg-indigo-700 transition-colors shadow-sm mx-auto"
             >
               <Plus size={18} />
               Create Document
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {documents.map((doc) => (
-              <div key={doc.id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow">
-                <div className="flex justify-between items-start">
-                  <h3
-                    className="text-lg font-medium text-gray-800 cursor-pointer hover:text-blue-600"
-                    onClick={() => doc.id && navigate(`/editor/${doc.id}`)}
-                  >
-                    {doc.title}
-                  </h3>
+              <div
+                key={doc.id}
+                className="bg-white border border-slate-100 rounded-lg p-5 shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                onClick={() => doc.id && navigate(`/editor/${doc.id}`)}
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex items-center gap-2">
+                    <FileText className="text-slate-400 flex-shrink-0" size={18} />
+                    <h3 className="text-base font-medium text-slate-900 truncate max-w-[70%]">
+                      {doc.title}
+                    </h3>
+                  </div>
                   <button
-                    onClick={() => doc.id && handleDeleteDocument(doc.id!)}
-                    className="text-gray-400 hover:text-red-500 transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      doc.id && handleDeleteDocument(doc.id!);
+                    }}
+                    className="text-slate-400 hover:text-red-500 transition-colors flex-shrink-0"
                     title="Delete document"
                   >
-                    <Trash2 size={18} />
+                    <Trash2 size={16} />
                   </button>
                 </div>
-                <div className="mt-4 flex items-center text-sm text-gray-500">
-                  <Calendar size={14} className="mr-1" />
+                <div className="flex items-center text-xs text-slate-500 mb-1">
+                  <Calendar size={12} className="mr-1" />
                   <span>Created: {formatDate(doc.createdAt)}</span>
                 </div>
-                <div className="mt-1 flex items-center text-sm text-gray-500">
-                  <User size={14} className="mr-1" />
+                <div className="flex items-center text-xs text-slate-500">
+                  <User size={12} className="mr-1" />
                   <span>Last modified: {formatDate(doc.lastModifiedAt)}</span>
                 </div>
-                <button
-                  onClick={() => doc.id && navigate(`/editor/${doc.id}`)}
-                  className="mt-4 w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors"
-                >
-                  Open
-                </button>
               </div>
             ))}
           </div>

@@ -447,13 +447,13 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ initialDocument }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F8FAFC] font-sans">
       {/* Collaborators Bar - Top of the editor */}
-      <div className="bg-blue-50 border-b border-blue-100 p-3">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+      <div className="sticky top-16 z-10 bg-slate-50/80 backdrop-blur-sm border-b border-slate-200 p-3">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Users className="text-blue-600" size={18} />
-            <span className="text-sm font-medium text-gray-700">
+            <Users className="text-slate-500" size={18} />
+            <span className="text-sm font-medium text-slate-500">
               {collaborators.length > 0
                 ? `${collaborators.length + 1} people editing`
                 : 'Editing alone'}
@@ -465,22 +465,24 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ initialDocument }) => {
                 {collaborators.map((collaborator) => (
                   <div
                     key={collaborator.id}
-                    className="w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
+                    className="relative w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white shadow-sm"
                     style={{ backgroundColor: collaborator.color }}
                     title={collaborator.name}
                   >
                     {collaborator.name.charAt(0).toUpperCase()}
+                    <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-green-500 rounded-full border-2 border-white"></div>
                   </div>
                 ))}
                 {/* Current user indicator */}
                 <div
-                  className="w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
+                  className="relative w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white shadow-sm"
                   style={{ backgroundColor: userColor }}
                   title={currentUser?.displayName || currentUser?.email || 'You'}
                 >
                   {currentUser?.displayName?.charAt(0).toUpperCase() ||
                    currentUser?.email?.charAt(0).toUpperCase() ||
                    'Y'}
+                  <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-green-500 rounded-full border-2 border-white"></div>
                 </div>
               </div>
             )}
@@ -493,21 +495,21 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ initialDocument }) => {
               syncStatus === 'connecting' ? 'bg-yellow-500 animate-pulse' :
               'bg-red-500'
             }`}></div>
-            <span className="text-sm text-gray-600">{syncStatusText}</span>
+            <span className="text-sm text-slate-500">{syncStatusText}</span>
           </div>
         </div>
       </div>
 
       {/* Editor Header */}
-      <header className="bg-white border-b border-gray-200 p-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+      <header className="sticky top-0 z-10 h-14 flex items-center justify-between px-4 py-2 backdrop-blur-md bg-white/70 border border-slate-200">
+        <div className="max-w-4xl mx-auto flex items-center justify-between w-full">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/dashboard')}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+              className="flex items-center gap-2 text-slate-500 hover:text-slate-700 transition-colors"
             >
               <ArrowLeft size={20} />
-              Back to Dashboard
+              Dashboard
             </button>
 
             {!isReadOnly && (
@@ -568,15 +570,15 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ initialDocument }) => {
                 onFocus={() => {
                   isEditingTitle.current = true;
                 }}
-                className="text-xl font-bold bg-transparent border-none focus:outline-none focus:ring-0 p-0 text-gray-800"
+                className="text-lg font-bold bg-transparent border-none focus:outline-none focus:ring-0 p-0 text-slate-900"
                 placeholder="Document title"
               />
             )}
             {title && isReadOnly && (
-              <h1 className="text-xl font-bold text-gray-800">{title}</h1>
+              <h1 className="text-lg font-bold text-slate-900">{title}</h1>
             )}
             {titleSaving && (
-              <div className="flex items-center gap-1 text-sm text-gray-500">
+              <div className="flex items-center gap-1 text-sm text-slate-500">
                 <div className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
                 Saving...
               </div>
@@ -584,16 +586,16 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ initialDocument }) => {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-lg">
-              <Save size={18} />
-              Changes autosaved
+            <div className="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-500">
+              <Save size={16} />
+              Saved
             </div>
             {!isReadOnly && (
               <button
                 onClick={() => setShowInviteModal(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex items-center gap-2 px-3 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors"
               >
-                <UserPlus size={18} />
+                <UserPlus size={16} />
                 Share
               </button>
             )}
@@ -602,21 +604,21 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ initialDocument }) => {
       </header>
 
       {/* Editor Content */}
-      <div className="max-w-4xl mx-auto p-6">
-        <div className="bg-white rounded-lg border border-gray-200 min-h-[60vh]">
-          <div ref={editorRef} className="h-[500px]"></div>
+      <div className="max-w-4xl mx-auto p-5">
+        <div className="bg-white rounded-lg shadow-2xl border border-slate-200 min-h-[70vh]">
+          <div ref={editorRef} className="h-[600px]"></div>
         </div>
       </div>
 
       {/* Invite Modal */}
       {showInviteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 shadow-xl">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">Share Document</h3>
+              <h3 className="text-lg font-semibold text-slate-900">Share Document</h3>
               <button
                 onClick={() => setShowInviteModal(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center transition-colors"
               >
                 ✕
               </button>
@@ -624,26 +626,26 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ initialDocument }) => {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-1">
                   Email Address
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                   placeholder="Enter email address"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-1">
                   Role
                 </label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                 >
                   <option value="viewer">Viewer</option>
                   <option value="editor">Editor</option>
@@ -652,48 +654,50 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ initialDocument }) => {
 
               <button
                 onClick={handleInviteUser}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors"
               >
                 Invite
               </button>
             </div>
 
             {/* People with access */}
-            <div className="mt-6 pt-4 border-t border-gray-200">
-              <h4 className="text-md font-medium text-gray-700 mb-3">People with access</h4>
+            <div className="mt-6 pt-4 border-t border-slate-200">
+              <h4 className="text-sm font-medium text-slate-900 mb-3">People with access</h4>
               <div className="space-y-2 max-h-60 overflow-y-auto">
                 {/* Document owner */}
                 {currentUser && (
-                  <div className="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
+                  <div className="flex items-center justify-between p-2 hover:bg-slate-50 rounded">
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold text-white">
+                      <div className="relative w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold text-white shadow-sm">
                         {currentUser.displayName?.charAt(0).toUpperCase() ||
                          currentUser.email?.charAt(0).toUpperCase() ||
                          'Y'}
+                        <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-green-500 rounded-full border-2 border-white"></div>
                       </div>
-                      <span className="text-sm">{currentUser.email || 'Owner'}</span>
+                      <span className="text-sm text-slate-700">{currentUser.email || 'Owner'}</span>
                     </div>
-                    <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">Owner</span>
+                    <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded font-medium">Owner</span>
                   </div>
                 )}
 
                 {/* Invited users */}
                 {authorizedUsers && Object.entries(authorizedUsers).map(([email, userData]) => (
-                  <div key={email} className="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
+                  <div key={email} className="flex items-center justify-between p-2 hover:bg-slate-50 rounded">
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-gray-400 flex items-center justify-center text-xs font-bold text-white">
+                      <div className="relative w-6 h-6 rounded-full bg-slate-400 flex items-center justify-center text-xs font-bold text-white shadow-sm">
                         {email.charAt(0).toUpperCase()}
+                        <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-green-500 rounded-full border-2 border-white"></div>
                       </div>
-                      <span className="text-sm">{email}</span>
+                      <span className="text-sm text-slate-700">{email}</span>
                     </div>
-                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded capitalize">
+                    <span className="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded capitalize font-medium">
                       {userData.role}
                     </span>
                   </div>
                 ))}
 
                 {(!authorizedUsers || Object.keys(authorizedUsers).length === 0) && (
-                  <p className="text-sm text-gray-500 italic">No one else has access</p>
+                  <p className="text-sm text-slate-500 italic">No one else has access</p>
                 )}
               </div>
             </div>

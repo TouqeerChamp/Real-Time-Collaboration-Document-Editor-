@@ -20,7 +20,10 @@
       "Bash(echo No files found containing react-quill:*)",
       "Bash(find . -name \"*.ts\" -o -name \"*.tsx\" | xargs grep -i \"quill\" 2>/dev/null)",
       "Bash(find ./src -name \"*.ts\" -o -name \"*.tsx\" | xargs grep -i \"quill\" 2>/dev/null)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(type:*)"
     ]
   }
 }
